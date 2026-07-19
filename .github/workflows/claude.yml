@@ -1,0 +1,39 @@
+name: Claude Code
+
+# The issue -> PR agent.
+# Comment "@claude fix this" on an issue (or open an issue whose body contains
+# "@claude") and the Claude Code Action reads the issue, edits the code, runs
+# the tests, and opens a pull request.
+
+on:
+  issue_comment:
+    types: [created]
+  issues:
+    types: [opened]
+
+jobs:
+  claude:
+    # Only run when someone actually mentions @claude, so unrelated issue
+    # activity doesn't burn Actions minutes / API tokens.
+    if: |
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'issues' && contains(github.event.issue.body, '@claude'))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write          # edit files, push a branch
+      pull-requests: write     # open the PR
+      issues: write            # comment back on the issue
+      id-token: write          # required for the action's auth
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Run Claude Code
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Keep the demo snappy and cheap on stage:
+          claude_args: "--max-turns 8"
+          # trigger_phrase: "@claude"   # default; shown for clarity
