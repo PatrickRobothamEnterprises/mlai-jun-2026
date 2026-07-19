@@ -1,0 +1,11 @@
+[workspace]
+name = "mlai-jun-2026"
+channels = ["conda-forge"]
+platforms = ["osx-arm64", "linux-64"]
+
+[dependencies]
+python = ">=3.10"
+pytest = "*"
+
+[tasks]
+test = "pytest -q"

@@ -23,12 +23,15 @@ target the agent operates on.
 
 ## Run the tests
 
+The project uses [pixi](https://pixi.sh) for its environment:
+
 ```bash
-python -m pytest -q
+pixi run test
 ```
 
-One test (`test_median_even_length`) fails until the agent's fix is merged —
-that's the bug the demo fixes.
+(The first run solves and installs the environment from `pixi.lock`.) One test
+(`test_median_even_length`) fails until the agent's fix is merged — that's the
+bug the demo fixes.
 
 ## Giving the talk
 

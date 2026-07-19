@@ -30,6 +30,14 @@ jobs:
         with:
           fetch-depth: 1
 
+      # Give the runner pixi + the project env, so the agent can run `pixi run test`.
+      - name: Set up pixi
+        uses: prefix-dev/setup-pixi@v0.10.0
+        with:
+          pixi-version: v0.63.2      # match the pixi that generated pixi.lock
+          run-install: true
+          cache: true
+
       - name: Run Claude Code
         uses: anthropics/claude-code-action@v1
         with:
