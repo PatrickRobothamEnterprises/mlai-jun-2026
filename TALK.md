@@ -18,17 +18,29 @@
 
 ## The plan
 
-1. **What can agents do?**
+1. **Why agents?**
 2. **What is an agent?**
 3. **How did LLMs change agents?**
 4. **How do you build one?** — deployment, prompts, tools, skills
 5. **What does it look like?** — live demo
-6. **The next level** — workflows, logging, memory, swarms
-7. **Who can build agents?**
+6. **How do I get started?**
+7. **Where do I learn more?** — workflows, logging, memory, swarms
 
 ---
 
-# 1 · What can agents do?
+# 1 · Why agents?
+
+---
+
+## The models have captured our imagination
+
+By now everyone in this room has watched a language model do something
+remarkable in a chat window — explain a paper, produce working code from a
+one-sentence request, reason through a puzzle invented on the spot.
+
+The work we'd most like to hand over, though, lives outside the chat window:
+in repositories, inboxes, ticket queues, and spreadsheets. Getting the model
+into that work is what agents are for.
 
 ---
 
@@ -50,19 +62,14 @@ production:
 
 ---
 
-## And the tasks keep getting longer
+## The gap is smaller than it looks
 
-In 2020, a language model could finish your sentence. By 2023, it could write
-a function from a docstring — a couple of minutes of human work. Today's
-agents complete tasks that take a person hours, and
-[METR's measurements](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/)
-put the doubling time for that task length at roughly seven months.
+Everything between the chat window and the cold-open PR fits in this talk:
+a loop, a handful of tools, and a few pages of clear writing. By the end
+you'll have seen every ingredient working — close enough to go build one
+yourself.
 
-> Extend the line, and agents graduate from "fix this bug" to
-> "own this migration" — tasks measured in days.
-
-A trend like that deserves to be understood from first principles. So let's
-start with what an agent actually is.
+Let's start by being precise about the thing we're building.
 
 ---
 
@@ -376,7 +383,7 @@ markdown file with steps, checks, and examples.
 The prompt tells the agent what to do right now. A skill captures how your
 team does a particular job — written once, reused across every task that needs
 it. If that sounds like a standard operating procedure, that's exactly what it
-is. We'll come back to that in section 7.
+is. We'll come back to that in section 6.
 
 ---
 
@@ -446,107 +453,7 @@ reacting to whatever comes back.
 
 ---
 
-# 6 · How do I take agents to the next level?
-
----
-
-## 6a · Workflows: put the control flow in code
-
-Ask one agent to improvise a forty-step migration and somewhere around step
-twenty it loses the thread. The fix is to move the control flow out of the
-model and into a script.
-
-```mermaid
-flowchart LR
-    D[discover work items] --> F1[agent: fix item 1]
-    D --> F2[agent: fix item 2]
-    D --> F3[agent: fix item N]
-    F1 --> V[agent: verify each]
-    F2 --> V
-    F3 --> V
-    V --> S[synthesize report]
-```
-
-The script decides what fans out, what gets verified, and what gets merged.
-Each agent receives one small job with a clear check at the end, and the
-loops and retries live in ordinary code, where they behave the same way on
-every run.
-
----
-
-## 6b · Logging & UUIDs: keep the trace
-
-Once agents run without you watching, the trace is your only window into what
-happened.
-
-```json
-{"run_id": "wf_9f2c…", "agent": "verify:median", "tool": "Bash",
- "input": "pixi run test", "result": "5 passed", "tokens": 4182}
-```
-
-Give every run, agent, and tool call an ID so you can correlate them later.
-When a run goes wrong, you replay the trace and see exactly which observation
-sent it sideways. Saved traces then earn their keep a second time: yesterday's
-failure becomes a regression test you run against tomorrow's prompt change. If
-you've operated microservices, this is the observability discipline you
-already know, applied to a new kind of service.
-
----
-
-## 6c · Memory: surviving the end of the session
-
-The context window is working memory, and it vanishes when the session ends.
-Long-term memory can be as simple as files the agent reads when it starts and
-updates when it finishes:
-
-```markdown
-memory/
-  project-conventions.md   # "deploys happen Tuesdays; never push Friday"
-  feedback.md              # "user prefers small PRs — split anything > 300 lines"
-  gotchas.md               # "test_flaky_io fails on CI ~10% of runs; retry once"
-```
-
-The catch is curation. A memory that only accumulates fills up with stale
-advice, and the agent will faithfully follow a note about a deploy process you
-changed six months ago. Prune it the way you'd prune a team wiki.
-
----
-
-## 6d · Swarms: more agents, smaller jobs
-
-Some jobs exceed what one context window can hold, and some findings matter
-too much to trust to a single pass. Both problems have the same answer: more
-agents, each with a smaller job.
-
-- **Fan-out:** ten agents each read one subsystem and report back; together
-  they map a codebase no single context could hold.
-- **Adversarial verification:** for each claimed finding, spawn skeptics whose
-  only job is to knock it down. Report whatever survives.
-- **Judge panels:** several independent attempts at the same problem, scored,
-  with the best one carried forward.
-
-```mermaid
-flowchart LR
-    P[problem] --> A1[attempt 1] & A2[attempt 2] & A3[attempt 3]
-    A1 & A2 & A3 --> J{judges score}
-    J --> W([winner + best ideas of the rest])
-```
-
----
-
-## The pattern behind all four
-
-> Break the work into steps you can check. Run agents on them in parallel.
-> Verify the results skeptically. Keep the trace.
-
-Read that sentence back and it describes something familiar: how a good lead
-hands a project to a team. Decomposition, delegation, verification,
-record-keeping — management skills. Which raises an interesting question
-about who's actually qualified to do this work.
-
----
-
-# 7 · Who can build agents?
+# 6 · How do I get started?
 
 ---
 
@@ -579,16 +486,119 @@ agent already exists. It's sitting in a binder, waiting for a loop to run it.
 
 ---
 
-## Whoever owns the procedure
+## Start with the procedure you already own
 
-The people best placed to build agents are the ones who own these documents:
-the ops engineer with the incident runbook, the accountant with the month-end
-close checklist, the support lead with the triage SOP.
+The people best placed to build their first agent are the ones who own these
+documents: the ops engineer with the incident runbook, the accountant with
+the month-end close checklist, the support lead with the triage SOP.
 
 Model access is cheap and getting cheaper. The scarce ingredient is a
 procedure written clearly enough that someone else — or something else — can
-follow it. Teams that already write things down start the agent era with that
-ingredient in hand.
+follow it. Pick one document, give it a checkable finish line and tight
+permissions, and you've built your first agent.
+
+---
+
+# 7 · Where do I learn more?
+
+---
+
+## 7a · Workflows: put the control flow in code
+
+Today's demo fit in one agent and one loop. The four ideas in this section
+are where to go reading when that stops being enough — starting with the
+forty-step migration: ask one agent to improvise it and somewhere around step
+twenty it loses the thread. The fix is to move the control flow out of the
+model and into a script.
+
+```mermaid
+flowchart LR
+    D[discover work items] --> F1[agent: fix item 1]
+    D --> F2[agent: fix item 2]
+    D --> F3[agent: fix item N]
+    F1 --> V[agent: verify each]
+    F2 --> V
+    F3 --> V
+    V --> S[synthesize report]
+```
+
+The script decides what fans out, what gets verified, and what gets merged.
+Each agent receives one small job with a clear check at the end, and the
+loops and retries live in ordinary code, where they behave the same way on
+every run.
+
+---
+
+## 7b · Logging & UUIDs: keep the trace
+
+Once agents run without you watching, the trace is your only window into what
+happened.
+
+```json
+{"run_id": "wf_9f2c…", "agent": "verify:median", "tool": "Bash",
+ "input": "pixi run test", "result": "5 passed", "tokens": 4182}
+```
+
+Give every run, agent, and tool call an ID so you can correlate them later.
+When a run goes wrong, you replay the trace and see exactly which observation
+sent it sideways. Saved traces then earn their keep a second time: yesterday's
+failure becomes a regression test you run against tomorrow's prompt change. If
+you've operated microservices, this is the observability discipline you
+already know, applied to a new kind of service.
+
+---
+
+## 7c · Memory: surviving the end of the session
+
+The context window is working memory, and it vanishes when the session ends.
+Long-term memory can be as simple as files the agent reads when it starts and
+updates when it finishes:
+
+```markdown
+memory/
+  project-conventions.md   # "deploys happen Tuesdays; never push Friday"
+  feedback.md              # "user prefers small PRs — split anything > 300 lines"
+  gotchas.md               # "test_flaky_io fails on CI ~10% of runs; retry once"
+```
+
+The catch is curation. A memory that only accumulates fills up with stale
+advice, and the agent will faithfully follow a note about a deploy process you
+changed six months ago. Prune it the way you'd prune a team wiki.
+
+---
+
+## 7d · Swarms: more agents, smaller jobs
+
+Some jobs exceed what one context window can hold, and some findings matter
+too much to trust to a single pass. Both problems have the same answer: more
+agents, each with a smaller job.
+
+- **Fan-out:** ten agents each read one subsystem and report back; together
+  they map a codebase no single context could hold.
+- **Adversarial verification:** for each claimed finding, spawn skeptics whose
+  only job is to knock it down. Report whatever survives.
+- **Judge panels:** several independent attempts at the same problem, scored,
+  with the best one carried forward.
+
+```mermaid
+flowchart LR
+    P[problem] --> A1[attempt 1] & A2[attempt 2] & A3[attempt 3]
+    A1 & A2 & A3 --> J{judges score}
+    J --> W([winner + best ideas of the rest])
+```
+
+---
+
+## The pattern behind all four
+
+> Break the work into steps you can check. Run agents on them in parallel.
+> Verify the results skeptically. Keep the trace.
+
+Read that sentence back and it describes something familiar: how a good lead
+hands a project to a team. Decomposition, delegation, verification,
+record-keeping — management skills. Scaling agents turns out to be the same
+discipline as section 6's getting started: write the procedure down, give it
+a checkable finish line, and run it — just with more loops.
 
 ---
 

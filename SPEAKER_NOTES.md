@@ -17,21 +17,22 @@ By the end of this talk you'll know exactly how it works." Don't
 over-introduce yourself.
 
 ### The plan (30 sec)
-Read the seven items. Flag the shape: capabilities → definition → history →
-how-to → demo → advanced patterns → who can do this. One live demo in the
-middle.
+Read the seven items. Flag the shape: why → definition → history → how-to →
+demo → getting started → further reading. One live demo in the middle.
 
 ---
 
-### 1 · What can agents do? (3 min) — the hook
+### 1 · Why agents? (3 min) — the hook
+- **Captured our imagination:** name the shared experience — everyone here
+  has had the chat-window wow moment; no need to sell the models to this
+  room. Then point at where the real work lives: repos, inboxes, queues,
+  spreadsheets. Agents are how the model gets there.
 - **Agents in the wild:** brisk — one breath per bullet, this is a montage,
   not a lecture. Land on "today's demo is one of these" so the room knows
   the cold-open PR wasn't a party trick.
-- **Tasks keep getting longer:** the METR doubling-time result — task length
-  agents can complete doubles roughly every seven months. Walk the timeline:
-  finish a sentence (2020) → write a function (2023) → hours of work (now).
-  Let the extrapolation quote hang for a beat, then the pivot line: "a trend
-  like that deserves to be understood from first principles."
+- **The gap is smaller than it looks:** the promise slide — a loop, a
+  handful of tools, a few pages of clear writing, all of it in this talk.
+  This is the contract with the audience: by the end, you can build one.
 
 ### 2 · What is an agent? (5 min)
 - **Textbook slide:** open on home turf for this crowd — sensors, actuators,
@@ -73,7 +74,7 @@ middle.
   it." Pause on
   it; it's the hinge of the talk.
 - **Why this talk exists:** deployment, actions, context — that's the map
-  for sections 4–6. Point at each word in the diagram.
+  for the rest of the talk. Point at each word in the diagram.
 
 ### 4 · How do you build an agent? (10 min) — the meat
 - **4a Deployment:** same loop, four homes — terminal, CI, server, cron. What
@@ -97,7 +98,7 @@ middle.
 - **4d Skills:** the prompt says what to do now; a skill captures how your
   team does a job, reused across tasks. Say explicitly: "if that sounds like
   a standard operating procedure, that's exactly what it is — hold that
-  thought," pointing at section 7.
+  thought," pointing at section 6.
 
 ---
 
@@ -124,38 +125,42 @@ on stage.
 - **Trace slide:** demystify — one tool call at a time, reacting to whatever
   comes back. That's the entire mechanism.
 
-### 6 · Next level (7 min)
-- **6a Workflows:** tell the story — one agent improvising forty steps loses
-  the thread around step twenty, so move the control flow into a script. The
-  script fans out, verifies, merges; each agent gets one small job with a
-  clear check; retries live in ordinary code and behave the same every run.
-- **6b Logging/UUIDs:** once nobody's watching, the trace is your only window
-  into what happened. IDs on every run/agent/tool-call so you can correlate;
-  replay the trace instead of guessing; saved traces become regression tests
-  for prompt changes. Frame as the microservices observability discipline
-  they already know.
-- **6c Memory:** context window = working memory, gone at session end.
-  Long-term memory = files read at start, updated at end. Spend a beat on
-  curation: an accumulating memory fills with stale advice and the agent will
-  faithfully follow it. "Prune it the way you'd prune a team wiki."
-- **6d Swarms:** two motivating problems — jobs bigger than one context, and
-  findings too important for a single pass — one answer: more agents, smaller
-  jobs. Fan-out, adversarial verification (skeptics try to knock each finding
-  down), judge panels.
-- **The pattern slide:** read the four-part sentence, then the turn: it
-  describes how a good lead hands work to a team — management skills.
-  Perfect segue to 7.
-
-### 7 · Who can build agents? (4 min) — the send-off
+### 6 · How do I get started? (4 min) — the payoff
 - **What we actually wrote:** replay the list — a definition of done, a
   procedure, a scope of authority, an escalation path. Let the room realise
   where this is going before you say it: organisations have been writing
   these documents for a century.
 - **Checklists/SOPs/runbooks table:** the reveal. "Most of the agent already
   exists. It's sitting in a binder, waiting for a loop to run it."
-- **Whoever owns the procedure:** ops engineer, accountant, support lead. The
-  scarce ingredient is a procedure written clearly enough for someone else —
-  or something else — to follow. Teams that write things down start ahead.
+- **Start with the procedure you already own:** ops engineer, accountant,
+  support lead. The scarce ingredient is a procedure written clearly enough
+  for someone else — or something else — to follow. Close on the recipe:
+  pick one document, give it a checkable finish line and tight permissions.
+
+### 7 · Where do I learn more? (7 min) — the afterword
+Frame it as further reading: headlines to go chase, not a tutorial. Move
+briskly; this section flexes if time is short.
+- **7a Workflows:** tell the story — one agent improvising forty steps loses
+  the thread around step twenty, so move the control flow into a script. The
+  script fans out, verifies, merges; each agent gets one small job with a
+  clear check; retries live in ordinary code and behave the same every run.
+- **7b Logging/UUIDs:** once nobody's watching, the trace is your only window
+  into what happened. IDs on every run/agent/tool-call so you can correlate;
+  replay the trace instead of guessing; saved traces become regression tests
+  for prompt changes. Frame as the microservices observability discipline
+  they already know.
+- **7c Memory:** context window = working memory, gone at session end.
+  Long-term memory = files read at start, updated at end. Spend a beat on
+  curation: an accumulating memory fills with stale advice and the agent will
+  faithfully follow it. "Prune it the way you'd prune a team wiki."
+- **7d Swarms:** two motivating problems — jobs bigger than one context, and
+  findings too important for a single pass — one answer: more agents, smaller
+  jobs. Fan-out, adversarial verification (skeptics try to knock each finding
+  down), judge panels.
+- **The pattern slide:** read the four-part sentence, then the turn: it
+  describes how a good lead hands work to a team — management skills, the
+  same discipline as getting started in section 6, with more loops. Lands
+  straight into the takeaways.
 
 ### Takeaways + Thank you (bal.)
 Repeat the three: the definition (rented brain, plug-in periphery),
@@ -173,7 +178,7 @@ build the agent. Then Q&A.
 - **Isn't MCP just function calling?** Function calling is the model-side
   mechanism; MCP standardises the *server* side so tools are shared across agents.
 - **How do you eval agents?** Traces + a checkable definition of done; replay
-  failures as regression tests (section 6b).
+  failures as regression tests (section 7b).
 - **Prompt injection defences?** Least privilege, human review gate, treat all
   input as hostile; there's no silver bullet — design for blast radius.
 - **Self-hosted / other models?** The action also supports Bedrock / Vertex.
