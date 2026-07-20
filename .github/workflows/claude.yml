@@ -47,6 +47,8 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           # Don't let claude run forever.
           claude_args: "--max-turns 100"
-          # Tool permissions live in .claude/settings.json — the agent reads
-          # them from the checkout, same as a human running Claude Code here.
+          # Tool permissions live in .claude/settings.json. The action runs
+          # Claude headless and does NOT read the checkout's settings on its
+          # own — it must be handed the file explicitly:
+          settings: ".claude/settings.json"
           # trigger_phrase: "@claude"   # default; shown for clarity
