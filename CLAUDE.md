@@ -15,5 +15,7 @@ ignore the talk markdown unless the issue asks about it.
 
 ## Definition of done
 - `pixi run test` passes with zero failures before you open a PR.
+- Finish by opening the pull request yourself with `gh pr create` — the job
+  is done when the PR exists, not when a branch is pushed.
 - Keep the diff minimal and focused on the issue at hand.
 - Explain the root cause and the fix in the PR description.

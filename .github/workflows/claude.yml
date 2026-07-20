@@ -40,10 +40,13 @@ jobs:
 
       - name: Run Claude Code
         uses: anthropics/claude-code-action@v1
+        env:
+          # Let the agent use the gh CLI (e.g. `gh pr create`).
+          GH_TOKEN: ${{ github.token }}
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          # Don't let claude run forever, and allowlist the test command —
-          # headless runs have no human to approve permission prompts, so
-          # anything the agent must run gets granted explicitly here.
-          claude_args: "--max-turns 100 --allowedTools 'Bash(pixi run test),Bash(pixi run test:*)'"
+          # Don't let claude run forever.
+          claude_args: "--max-turns 100"
+          # Tool permissions live in .claude/settings.json — the agent reads
+          # them from the checkout, same as a human running Claude Code here.
           # trigger_phrase: "@claude"   # default; shown for clarity

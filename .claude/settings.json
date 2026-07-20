@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pixi run test)",
+      "Bash(pixi run test:*)",
+      "Bash(gh pr create:*)"
+    ]
+  }
+}
