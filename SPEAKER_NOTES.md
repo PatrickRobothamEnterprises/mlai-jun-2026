@@ -92,9 +92,13 @@ demo → getting started → further reading. One live demo in the middle.
 - **4c Tools/MCP/Permissions:** a tool is just name + description + schema;
   every result feeds the next decision — the sensor and actuator halves of
   the textbook diagram. MCP: write the server once, every agent can use it;
-  the ecosystem compounds. Permissions: new-hire analogy; read the SSH-key
-  attack line aloud — this crowd will feel it. The design goal: a fooled
-  agent produces a weird PR somebody rejects, not a compromised system.
+  the ecosystem compounds. Permissions: new-hire analogy; two layers, both
+  files in the repo — token scopes in the workflow YAML, command allowlist
+  in .claude/settings.json. Tell the rehearsal story: the agent couldn't run
+  pixi run test until we allowlisted it, so it shipped an unverified fix and
+  asked us to run the tests — the fence works. Read the SSH-key attack line
+  aloud — this crowd will feel it. The design goal: a fooled agent produces
+  a weird PR somebody rejects, not a compromised system.
 - **4d Skills:** the prompt says what to do now; a skill captures how your
   team does a job, reused across tasks. Say explicitly: "if that sounds like
   a standard operating procedure, that's exactly what it is — hold that
