@@ -79,9 +79,11 @@ Let's start by being precise about the thing we're building.
 
 ## Start with the textbook
 
-> An agent **perceives** its environment through **sensors** and **acts** on it
-> through **actuators**, choosing actions via a **policy**.
-> — Russell & Norvig, ch. 2, and every RL course since
+> "An agent is anything that can be viewed as **perceiving** its environment
+> through **sensors** and **acting** upon that environment through
+> **actuators**."
+> — Russell & Norvig, *Artificial Intelligence: A Modern Approach*,
+> [ch. 2](https://aima.cs.berkeley.edu/4th-ed/pdfs/newchap02.pdf)
 
 ```mermaid
 flowchart LR
@@ -90,6 +92,10 @@ flowchart LR
     P --> A[Actuators]
     A -- actions --> E
 ```
+
+The box in the middle is what RL calls the **policy** — the mapping from
+what the agent perceives to what it does next (Sutton & Barto,
+*Reinforcement Learning: An Introduction*, 2nd ed. 2018, §3.1).
 
 A thermostat fits this definition. So does AlphaGo. The definition is thirty
 years old and it still describes everything in this talk — what changed is
