@@ -42,6 +42,8 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          # Don't let claude run forever.
-          claude_args: "--max-turns 100"
+          # Don't let claude run forever, and allowlist the test command —
+          # headless runs have no human to approve permission prompts, so
+          # anything the agent must run gets granted explicitly here.
+          claude_args: "--max-turns 100 --allowedTools 'Bash(pixi run test),Bash(pixi run test:*)'"
           # trigger_phrase: "@claude"   # default; shown for clarity
