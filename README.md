@@ -1,8 +1,8 @@
-# MLAI talk — "From Issue to PR: An Agent That Ships Code"
+# MLAI talk — "Building Agents: From First Principles to Swarms"
 
-Materials for a ~35-minute talk (MLAI, June 2026) explaining what an AI *agent*
-is, using one concrete example: an agent that **reads a GitHub issue and opens a
-PR to fix it** — the official
+Materials for a ~40-minute talk (MLAI, June 2026) on what AI *agents* are, how
+LLMs changed them, and how to build one — anchored by a live demo of an agent
+that **reads a GitHub issue and opens a PR to fix it**, via the official
 [`anthropics/claude-code-action`](https://github.com/anthropics/claude-code-action).
 
 This single repo does double duty: it holds the talk **and** is the live-demo
