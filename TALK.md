@@ -3,6 +3,12 @@
 **Patrick Robotham · MLAI · June 2026**
 
 ---
+My name is Patrick Robotham.
+This is a talk intended to be a practical, engineering talk.
+We're not going to cover any research or groundbreaking work, instead it's about how we can take these "AI",
+"LLM" things and use them to write useful software.
+
+---
 
 ## The plan
 
