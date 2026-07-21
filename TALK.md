@@ -1,4 +1,4 @@
-# Building Agents — From First Principles to Swarms
+# AI Agents: A Crash Course
 
 **Patrick Robotham · MLAI · June 2026**
 
