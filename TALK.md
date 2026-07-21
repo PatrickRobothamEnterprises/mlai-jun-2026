@@ -355,6 +355,10 @@ across the whole field.
 
 ## Permissions: plan for the agent being fooled
 
+![](https://preview.redd.it/replit-ai-went-rogue-deleted-a-companys-entire-database-v0-zxdmy380b0ef1.png?width=988&format=png&auto=webp&s=decfc100022efe8e315592f185d7cefe61964a39)
+
+---
+
 The agent acts with real credentials, so scope them the way you'd scope a new
 hire's. Two layers, both plain files in the repo:
 
