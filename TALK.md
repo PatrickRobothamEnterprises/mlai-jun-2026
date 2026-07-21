@@ -1,18 +1,6 @@
 # Building Agents — From First Principles to Swarms
 
-**Pat Robotham · MLAI · June 2026**
-
-> Present this straight from GitHub in the browser — scroll top to bottom.
-> Each `---` is a "slide." Diagrams render natively on GitHub.
-> Speaker notes live in [`SPEAKER_NOTES.md`](SPEAKER_NOTES.md) (keep that on a second screen).
-
----
-
-# A machine read a bug report
-
-# and wrote the fix.
-
-<!-- COLD OPEN: have the finished PR open in another tab. Show it, then scroll on. -->
+**Patrick Robotham · MLAI · June 2026**
 
 ---
 
@@ -266,23 +254,30 @@ and whether a human is watching while it works.
 
 ## Deployment is an environment choice
 
-In your terminal, you're sitting right there. You can grant generous
-permissions, because you'll see the moment it goes off course.
+Like any software, agents must deployed somewhere. They can run on your laptop, but if you want the agent to run at 2am it needs to be deployed in a dedicated resource.
+For the sake of this talk, I've used Github Actions for my deployment, which is a free resource provided by Github.
 
-On a CI runner at 2am, nobody is watching. So the permissions get tighter, the
-budgets get hard limits, and the output lands somewhere a human will review
-before it takes effect.
+Getting good at agents does involve a degree of "DevOps." Luckily AI can walk us through a lot of the details!
 
-```yaml
-# the whole deployment for today's demo:
-on:
-  issue_comment: { types: [created] }
-steps:
-  - uses: anthropics/claude-code-action@v1
+The deployment lives in .github/workflows/claude.yml
+
+```
+      - name: Run Claude Code
+        uses: anthropics/claude-code-action@v1
+        env:
+          # Let the agent use the gh CLI (e.g. `gh pr create`).
+          GH_TOKEN: ${{ github.token }}
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Don't let claude run forever.
+          claude_args: "--max-turns 100"
+          # Tool permissions live in .claude/settings.json. The action runs
+          # Claude headless and does NOT read the checkout's settings on its
+          # own — it must be handed the file explicitly:
+          settings: ".claude/settings.json"
+          # trigger_phrase: "@claude"   # default; shown for clarity
 ```
 
-That's the entire deployment. The loop ships inside the action itself, so
-those five lines of YAML are the complete list of things you maintain.
 
 ---
 
@@ -617,6 +612,28 @@ hands a project to a team. Decomposition, delegation, verification,
 record-keeping — management skills. Scaling agents turns out to be the same
 discipline as section 6's getting started: write the procedure down, give it
 a checkable finish line, and run it — just with more loops.
+
+---
+
+## The reading list
+
+- **The patterns** — Anthropic,
+  [*Building Effective Agents*](https://www.anthropic.com/research/building-effective-agents):
+  the workflows-vs-agents taxonomy this section leans on.
+- **Tools** — [Model Context Protocol](https://modelcontextprotocol.io):
+  the spec, SDKs, and the server ecosystem.
+- **Skills** — Anthropic,
+  [*Equipping agents for the real world with Agent Skills*](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills).
+- **Swarms** — Anthropic,
+  [*How we built our multi-agent research system*](https://www.anthropic.com/engineering/built-multi-agent-research-system):
+  fan-out, verification, and traces in production.
+- **Practice** — [*Claude Code best practices*](https://code.claude.com/docs/en/best-practices),
+  and this repo: the workflow, `CLAUDE.md`, `.claude/settings.json`, and the
+  skill are all here to fork.
+  **Huggingface Context Engineering Course** [link](https://huggingface.co/learn/context-course/unit0/introduction)
+- **First principles** — [AIMA ch. 2](https://aima.cs.berkeley.edu/4th-ed/pdfs/newchap02.pdf) ·
+  [Sutton & Barto, free online](http://incompleteideas.net/book/the-book-2nd.html) ·
+  [Toolformer](https://arxiv.org/abs/2302.04761).
 
 ---
 
