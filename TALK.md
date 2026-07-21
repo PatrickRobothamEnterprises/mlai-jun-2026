@@ -396,7 +396,12 @@ A **skill** is a procedure the agent loads when the task calls for it — a
 markdown file with steps, checks, and examples.
 
 ```markdown
-# SKILL.md — release-checklist
+# SKILL.md 
+---
+name: release-checklist
+description: Steps to follow for releasing a PR.
+---
+
 1. Bump version in pixi.toml
 2. Update CHANGELOG (Keep-a-Changelog format)
 3. `pixi run test` — zero failures
@@ -405,8 +410,44 @@ markdown file with steps, checks, and examples.
 
 The prompt tells the agent what to do right now. A skill captures how your
 team does a particular job — written once, reused across every task that needs
-it. If that sounds like a standard operating procedure, that's exactly what it
-is. We'll come back to that in section 6.
+it. This is the equivalent of functions in programming, or standard operating procedures.
+
+---
+Anatomy of a skill
+
+Directory structure
+```
+skill-name/
+├── SKILL.md              # Required: metadata + instructions
+├── scripts/              # Optional: executable code
+│   ├── validate.py
+│   ├── deploy.sh
+│   └── README.md
+├── references/           # Optional: documentation links
+│   ├── api-reference.md
+│   └── examples.md
+└── assets/               # Optional: templates, data
+    ├── template.yaml
+    └── config-example.json
+```
+---
+
+Skill frontmatter
+```
+---
+name: "dataset-publishing"
+description: "Publish datasets to Hugging Face Hub. Use when uploading datasets, creating dataset cards, or managing dataset versions."
+license: "Apache-2.0"
+compatibility: "Tested with Python 3.8+ and huggingface_hub 0.16+"
+metadata:
+  author: "ml-team"
+  version: "1.0.0"
+allowed-tools: "Bash(hf:*) Python(huggingface_hub:*)"
+---
+```
+Critical fields are 
+`name` and `description`. That's what the AI uses to work out if it wants to execute the rest of the skill.
+
 
 ---
 
