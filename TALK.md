@@ -18,7 +18,7 @@ We're not going to cover any research or groundbreaking work, instead it's about
 4. **How do you build one?** — deployment, prompts, tools, skills
 5. **What does it look like?** — live demo
 6. **How do I get started?**
-7. **Where do I learn more?** — workflows, logging, memory, swarms
+7. **The next level** — workflows, logging, memory, swarms, reading list.
 
 ---
 
