@@ -476,7 +476,18 @@ reacting to whatever comes back.
 
 ---
 
-## Look at what we actually wrote today
+## What do you want to do?
+
+One of the hardest parts of this talk was actually coming up with a demo use case for agents.
+A lot of the material deals with agents in abstractions.
+The skills we want to develop here are less about policy gradients and tensors, 
+and more about business analysis, product design, imagining a good solution.
+
+
+
+---
+
+## What did we cover today?
 
 Set aside the YAML and count what we authored in this talk:
 
@@ -485,9 +496,7 @@ Set aside the YAML and count what we authored in this talk:
 - a **scope of authority** — can open a PR, can't merge
 - an **escalation path** — a human reviews the diff
 
-Every item on that list is a piece of clear writing about how a job should be
-done — and organisations have been producing exactly that kind of document
-for a century.
+You don't need to program to define any of these, but you do have to be able to think like a programmer.
 
 ---
 
